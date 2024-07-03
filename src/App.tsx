@@ -5,9 +5,12 @@ import { FC, Fragment } from "react";
 import { ConfigJSON } from "./types";
 import Header from "./components/Header";
 import { objectToJson } from "./lib";
+import { setData } from "./redux/data";
+import { useDispatch } from "react-redux";
 import { useFetchAPI } from "./hooks/useFetchAPI";
 
 export const App: FC = () => {
+  const dispatch = useDispatch();
   useFetchAPI<ConfigJSON>(
     "https://delmard.ru/api/cfg/site/get/item/",
     {
@@ -21,7 +24,9 @@ export const App: FC = () => {
       }),
     },
     {
-      complete: (result) => {},
+      complete: (result) => {
+        dispatch(setData(result as ConfigJSON));
+      },
     }
   );
 

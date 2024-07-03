@@ -1,8 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dataReducer from "./data";
+import itemReducer from "./item";
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     data: dataReducer,
+    item: itemReducer,
   },
 });
+
+export type AppStore = typeof store;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<AppStore["getState"]>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = AppStore["dispatch"];

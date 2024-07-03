@@ -1,4 +1,4 @@
-export type ConfigJSON = Array<Section>;
+export type ConfigJSON = Section[];
 
 export interface Value {
   id: number;

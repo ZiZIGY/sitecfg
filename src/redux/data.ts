@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: Object = {
   loading: true,
-  items: [] as ConfigJSON,
+  items: [],
 };
 
 export const dataSlice = createSlice({
@@ -11,7 +11,7 @@ export const dataSlice = createSlice({
   initialState,
   reducers: {
     setData: (state: Object, action: { payload: ConfigJSON }) => {
-      return action.payload ? [...action.payload] : [];
+      return action.payload ? action.payload : [];
     },
   },
 });
