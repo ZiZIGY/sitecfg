@@ -1,21 +1,27 @@
-import { ConfigJSON } from "./../types/config";
+import { InitialDataState } from "../types/store";
+import { Item } from "../types/item";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: Object = {
+const initialState: InitialDataState = {
   loading: true,
-  items: [],
+  defaultTab: 0,
+  item: undefined,
 };
 
 export const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    setData: (state: Object, action: { payload: ConfigJSON }) => {
-      return action.payload ? action.payload : [];
+    setItem: (state: InitialDataState, action: { payload: Item }) => {
+      state.loading = false;
+      state.item = action.payload;
+    },
+    setDefaultTab: (state: InitialDataState, action: { payload: number }) => {
+      state.defaultTab = action.payload;
     },
   },
 });
 
-export const { setData } = dataSlice.actions;
+export const { setItem, setDefaultTab } = dataSlice.actions;
 
 export default dataSlice.reducer;

@@ -16,7 +16,7 @@ export const useFetchAPI = <T>(
 
       try {
         const response: Response = await fetch(path, options);
-        const result: T = JSON.parse(await response.json());
+        const result: T = await response.json();
 
         setData(result);
 

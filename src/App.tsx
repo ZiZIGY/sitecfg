@@ -2,15 +2,21 @@ import "./App.css";
 
 import { FC, Fragment } from "react";
 
+import Card from "./components/Card";
 import { ConfigJSON } from "./types";
+import Container from "./components/Container";
 import Header from "./components/Header";
+import { Item } from "./types/item";
+import Row from "./components/Row";
+import Tabs from "./components/Tabs";
 import { objectToJson } from "./lib";
-import { setData } from "./redux/data";
-import { useDispatch } from "react-redux";
+import { setItem } from "./redux/data";
+import { useAppDispatch } from "./hooks/useAppDispatch";
 import { useFetchAPI } from "./hooks/useFetchAPI";
 
 export const App: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   useFetchAPI<ConfigJSON>(
     "https://delmard.ru/api/cfg/site/get/item/",
     {
@@ -24,15 +30,16 @@ export const App: FC = () => {
       }),
     },
     {
-      complete: (result) => {
-        dispatch(setData(result as ConfigJSON));
-      },
+      complete: (result) => dispatch(setItem(result as Item)),
     }
   );
 
   return (
     <Fragment>
       <Header />
+      <Container>
+        <Tabs />
+      </Container>
     </Fragment>
   );
 };
