@@ -25,7 +25,9 @@ export const Header = () => {
           transition={{ duration: 0.5 }}
         >
           Выбрать
-          {!loading && (
+          {loading ? (
+            <div className="animate-pulse bg-gray-500 h-[22px] w-1/3 rounded-md"></div>
+          ) : (
             <motion.p
               key={defaultTab}
               initial={{
@@ -46,7 +48,9 @@ export const Header = () => {
             </motion.p>
           )}
         </motion.h2>
-        {!loading && (
+        {loading ? (
+          <div className="h-[14px] animate-pulse bg-gray-500 rounded-md w-1/2"></div>
+        ) : (
           <motion.p
             className={styles["header__subtitle"]}
             initial={{

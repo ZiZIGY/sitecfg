@@ -2,6 +2,6 @@ import { Item } from "./item";
 
 export type InitialDataState = {
   loading?: boolean;
-  defaultTab?: number | undefined;
+  defaultTab?: number;
   item?: Item | undefined;
 };

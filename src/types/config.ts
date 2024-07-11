@@ -43,6 +43,6 @@ export interface SectionItemProperties {
 export interface Section {
   id: number;
   name: string;
-  sections: any[];
+  sections: Section[];
   items: SectionItem[];
 }

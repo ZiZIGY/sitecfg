@@ -5,10 +5,11 @@ import { FC, Fragment } from "react";
 import Card from "./components/Card";
 import { ConfigJSON } from "./types";
 import Container from "./components/Container";
+import CurrentTab from "./components/CurrentTab";
 import Header from "./components/Header";
 import { Item } from "./types/item";
 import Row from "./components/Row";
-import Tabs from "./components/Tabs";
+import Tabs from "./components/Header/Tabs/";
 import { objectToJson } from "./lib";
 import { setItem } from "./redux/data";
 import { useAppDispatch } from "./hooks/useAppDispatch";
@@ -39,6 +40,10 @@ export const App: FC = () => {
       <Header />
       <Container>
         <Tabs />
+        <Row className="flex gap-5">
+          <Card />
+          <CurrentTab />
+        </Row>
       </Container>
     </Fragment>
   );
