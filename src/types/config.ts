@@ -1,6 +1,6 @@
 export type ConfigJSON = Section[];
 
-export interface Value {
+export interface Property {
   id: number;
   name: string;
   price?: Price;
@@ -33,7 +33,7 @@ export interface SectionItem {
 
 export interface SectionItemProperties {
   name?: string;
-  values?: Value[];
+  values?: Property[];
   defaultValue: number | string;
   type?: string;
   min?: number;
