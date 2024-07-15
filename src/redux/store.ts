@@ -1,9 +1,11 @@
+import animationReducer from "./animation";
 import { configureStore } from "@reduxjs/toolkit";
 import dataReducer from "./data";
 
 export const store = configureStore({
   reducer: {
     data: dataReducer,
+    animation: animationReducer,
   },
 });
 

@@ -1,7 +1,6 @@
 import { FetchAPICallbacks, FetchAPIOptions } from "../types";
 import { useEffect, useState } from "react";
 
-// callback?: (result?: unknown, loading?: boolean) => void
 export const useFetchAPI = <T>(
   path: string,
   options?: FetchAPIOptions,

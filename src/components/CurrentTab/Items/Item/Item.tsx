@@ -1,15 +1,16 @@
-import { ItemType, Property, SectionItem } from "../../../../types/config";
+import { ItemType, SectionItem } from "../../../../types/config";
+
+import { Fragment } from "react/jsx-runtime";
+import Input from "./Input";
+import List from "./List";
+import Select from "../../../UI/Select";
 
 export const Item = ({ item }: { item: SectionItem }) => {
   return (
-    <div>
-      {item.type === ItemType.List && (
-        <div className="text-[#2A2A2A]">
-          {item.properties.values?.map((prop: Property) => (
-            <div>{prop.name}</div>
-          ))}
-        </div>
-      )}
-    </div>
+    <Fragment>
+      {item.type === ItemType.List && <List item={item} />}
+      {item.type === ItemType.Select && <Select item={item} />}
+      {item.type === ItemType.Input && <Input item={item} />}
+    </Fragment>
   );
 };

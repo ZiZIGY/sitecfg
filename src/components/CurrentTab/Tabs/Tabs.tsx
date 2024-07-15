@@ -13,7 +13,8 @@ export const Tabs = ({ section }: { section: Section }) => {
       {section?.sections.length !== 0 && (
         <Row className="flex gap-5 mb-3 border-b-2">
           {section?.sections.map((tab, tabIndex: number) => (
-            <div
+            <button
+              type="button"
               className="relative cursor-pointer"
               key={tab.id}
               onClick={() => setCurrentTab(tabIndex)}
@@ -23,12 +24,12 @@ export const Tabs = ({ section }: { section: Section }) => {
                   <span className="text-[#2A2A2A] font-semibold">
                     {tab.name}
                   </span>
-                  <Underline key={tab.id} />
+                  <Underline key={tab.id} bottomPx={-2} />
                 </Fragment>
               ) : (
                 <span className="text-[#2a2a2a80]">{tab.name}</span>
               )}
-            </div>
+            </button>
           ))}
         </Row>
       )}

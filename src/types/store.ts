@@ -5,3 +5,7 @@ export type InitialDataState = {
   defaultTab?: number;
   item?: Item | undefined;
 };
+
+export type InitialAnimationState = {
+  completed: number[];
+};

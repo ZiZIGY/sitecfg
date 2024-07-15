@@ -9,3 +9,9 @@ export const formDataToJson = (formData: FormData) => {
 export const objectToJson = (obj: Object) => {
   return JSON.stringify(obj);
 };
+
+export const deviceIsMobile = (): boolean => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};

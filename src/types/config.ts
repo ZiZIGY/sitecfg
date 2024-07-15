@@ -5,7 +5,7 @@ export interface Property {
   name: string;
   price?: Price;
   picture?: string;
-  value?: string;
+  value?: string | number;
 }
 
 export interface Price {
@@ -14,9 +14,15 @@ export interface Price {
 }
 
 export enum PriceType {
-  Empty = "+",
+  Plus = "+",
   Free = "free",
-  Type = "%",
+  Percent = "%",
+}
+
+export enum InputTypes {
+  Text = "text",
+  Number = "number",
+  Any = "any",
 }
 
 export enum ItemType {
@@ -35,9 +41,9 @@ export interface SectionItemProperties {
   name?: string;
   values?: Property[];
   defaultValue: number | string;
-  type?: string;
-  min?: number;
-  max?: number;
+  type?: InputTypes;
+  min?: number | 0;
+  max?: number | 0;
 }
 
 export interface Section {
