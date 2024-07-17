@@ -44,9 +44,7 @@ export const Select = ({ item }: { item: SectionItem }) => {
                 <p
                   key={property.id}
                   className="p-[10px] font-medium text-sm"
-                  onClick={() => {
-                    setVal(property.value || 0);
-                  }}
+                  onClick={() => {}}
                 >
                   {property.name}
                 </p>

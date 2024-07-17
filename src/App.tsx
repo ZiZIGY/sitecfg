@@ -9,10 +9,12 @@ import CurrentTab from "./components/CurrentTab";
 import Header from "./components/Header";
 import { Item } from "./types/item";
 import Row from "./components/Row";
+import SelectedParams from "./components/SelectedParams";
 import Tabs from "./components/Header/Tabs/";
 import { objectToJson } from "./lib";
 import { setItem } from "./redux/data";
 import { useAppDispatch } from "./hooks/useAppDispatch";
+import { useAppSelector } from "./hooks/useAppSelector";
 import { useFetchAPI } from "./hooks/useFetchAPI";
 
 export const App: FC = () => {
@@ -35,17 +37,24 @@ export const App: FC = () => {
     }
   );
 
+  const item = useAppSelector((state) => state.data.item);
+
   return (
-    <Fragment>
-      <Header />
-      <Container>
-        <Tabs />
-        <Row className="flex gap-5">
-          <Card />
-          <CurrentTab />
-        </Row>
-      </Container>
-    </Fragment>
+    <>
+      {item && (
+        <>
+          <Header />
+          <Container>
+            <Tabs />
+            <Row className="flex gap-5">
+              <Card />
+              <CurrentTab />
+              <SelectedParams />
+            </Row>
+          </Container>
+        </>
+      )}
+    </>
   );
 };
 

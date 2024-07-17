@@ -8,7 +8,7 @@ export const CurrentTab = () => {
   const { item, defaultTab } = useAppSelector((state) => state.data);
   const currentItem = item?.CONFIG[defaultTab || 0] as Section;
   return (
-    <Row className="bg-[#f2f3f5] w-[720px] h-[500px] pr-[5px] pl-[20px] pb-[15px] pt-[15px] rounded-md flex flex-col">
+    <Row className="bg-[#f2f3f5] w-full h-[500px] pr-[5px] pl-[20px] pb-[15px] pt-[15px] rounded-md flex flex-col">
       {currentItem?.sections.length ? (
         <Tabs section={currentItem} />
       ) : (

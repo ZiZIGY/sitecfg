@@ -1,0 +1,19 @@
+export const Minus = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+    >
+      <path
+        d="M3 9H15"
+        stroke="#2A2A2A"
+        stroke-opacity="0.2"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      ></path>
+    </svg>
+  );
+};

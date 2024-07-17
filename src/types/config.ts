@@ -1,8 +1,10 @@
 export type ConfigJSON = Section[];
 
 export interface Property {
-  id: number;
+  id: number | string;
   name: string;
+  multiple?: boolean;
+  type: string;
   price?: Price;
   picture?: string;
   value?: string | number;
@@ -40,7 +42,7 @@ export interface SectionItem {
 export interface SectionItemProperties {
   name?: string;
   values?: Property[];
-  defaultValue: number | string;
+  defaultValue: string;
   type?: InputTypes;
   min?: number | 0;
   max?: number | 0;

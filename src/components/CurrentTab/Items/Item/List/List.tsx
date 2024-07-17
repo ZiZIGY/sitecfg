@@ -1,8 +1,15 @@
+import { Section, SectionItem } from "../../../../../types/config";
+
 import ListProperty from "./ListProperty";
-import { SectionItem } from "../../../../../types/config";
 import { motion } from "framer-motion";
 
-export const List = ({ item }: { item: SectionItem }) => {
+export const List = ({
+  item,
+  section,
+}: {
+  item: SectionItem;
+  section: Section;
+}) => {
   const container = {
     visible: {
       transition: {
@@ -20,9 +27,10 @@ export const List = ({ item }: { item: SectionItem }) => {
     >
       {item.properties.values?.map((property, index) => (
         <ListProperty
+          section={section}
           property={property}
           index={index}
-          parentId={item.id}
+          parent={item}
           key={property.id}
         />
       ))}

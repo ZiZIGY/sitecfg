@@ -8,6 +8,7 @@ export type Item = {
   MODIFIED_BY: string;
   DATE_CREATE: string;
   DATE_CREATE_UNIX: string;
+  PRICE: string;
   CREATED_BY: string;
   IBLOCK_ID: string;
   IBLOCK_SECTION_ID: string;

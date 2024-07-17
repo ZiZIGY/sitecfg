@@ -1,4 +1,4 @@
-import { Fragment, useId, useState } from "react";
+import { Fragment, useEffect, useId, useState } from "react";
 
 import Items from "../Items";
 import Row from "../../Row";
@@ -7,7 +7,13 @@ import Underline from "../../UI/Underline";
 
 export const Tabs = ({ section }: { section: Section }) => {
   const [currentTab, setCurrentTab] = useState<number>(0);
+
   const id = useId();
+
+  useEffect(() => {
+    return () => setCurrentTab(0);
+  }, [section]);
+
   return (
     <Fragment key={id}>
       {section?.sections.length !== 0 && (
@@ -35,7 +41,7 @@ export const Tabs = ({ section }: { section: Section }) => {
       )}
       {section?.sections && <Items section={section.sections[currentTab]} />}
       {section?.sections[currentTab]?.sections && (
-        <Tabs section={section.sections[currentTab]} />
+        <Tabs section={section.sections[currentTab]} key={section.id} />
       )}
     </Fragment>
   );
