@@ -14,6 +14,7 @@ const initialState: InitialDataState = {
     price: 0,
     defaultPrice: 0,
   },
+  defaultConfig: undefined,
 };
 
 export const dataSlice = createSlice({
@@ -29,22 +30,32 @@ export const dataSlice = createSlice({
         defaultPrice: Number(action.payload.PRICE),
         prevPrice: Number(action.payload.PRICE),
       };
+      state.defaultConfig = state.config;
       state.config.sections = createBaseConfig(state.item.CONFIG);
     },
     setDefaultTab: (state: InitialDataState, action: { payload: number }) => {
       state.defaultTab = action.payload;
     },
     changeList: (state: InitialDataState, action) => {
-      let currentSectionName = action.payload.property.type
-        ? action.payload.property.type
-        : action.payload.section.name;
+      console.log("action: ", action);
+      let currentSectionName: string;
+      if (action.payload.component.type === "list") {
+        currentSectionName = action.payload.property.type
+          ? action.payload.property.type
+          : action.payload.section.name;
+      } else {
+        currentSectionName = action.payload.component.properties.name;
+      }
+
       const currentSectionIndex = state.config?.sections?.findIndex(
         (section) => section.name === currentSectionName
       );
       const section = state.config?.sections?.[currentSectionIndex as number];
 
       if (section) {
-        section.picture = action.payload.property.picture;
+        if (action.payload.component.type === "list") {
+          section.picture = action.payload.property.picture;
+        }
         section.value = action.payload.property.name;
         section.price = action.payload.property.price;
       }
@@ -67,6 +78,7 @@ export const dataSlice = createSlice({
         state.config.price = newPrice;
       }
     },
+    reset: (state: InitialDataState, action: { payload: string }) => {},
   },
 });
 

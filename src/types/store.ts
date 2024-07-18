@@ -6,6 +6,7 @@ export type InitialDataState = {
   defaultTab?: number;
   item?: Item | undefined;
   config: SelectedConfig;
+  defaultConfig?: SelectedConfig;
 };
 
 export type SelectedConfig = {

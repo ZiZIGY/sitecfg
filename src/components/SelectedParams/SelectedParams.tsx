@@ -44,7 +44,7 @@ export const SelectedParams = () => {
           ))}
         </div>
       </div>
-      <Price price={price} prevPrice={prevPrice} increaseValue={100} />
+      <Price price={price} prevPrice={prevPrice} increaseValue={200} />
       <button className="bg-[#FFA12E] text-[16px] px-[10px] py-[20px] h-[50px] rounded-md font-medium text-white flex items-center justify-center w-full">
         Подтвердить заказ
       </button>
@@ -61,7 +61,6 @@ const Price = ({
   prevPrice: number;
   increaseValue: number;
 }) => {
-  console.log(prevPrice, price);
   const [newPrice, setNewPrice] = useState(prevPrice);
 
   useEffect(() => {
@@ -76,7 +75,7 @@ const Price = ({
           ? setNewPrice(price)
           : setNewPrice(newPrice - increaseValue);
       }
-    }, 10);
+    }, 1);
     return () => clearTimeout(interval);
   }, [price, prevPrice, newPrice]);
 

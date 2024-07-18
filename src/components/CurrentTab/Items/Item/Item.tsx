@@ -15,7 +15,9 @@ export const Item = ({
   return (
     <Fragment>
       {item.type === ItemType.List && <List item={item} section={section} />}
-      {item.type === ItemType.Select && <Select item={item} />}
+      {item.type === ItemType.Select && (
+        <Select item={item} section={section} />
+      )}
       {item.type === ItemType.Input && <Input item={item} />}
     </Fragment>
   );
