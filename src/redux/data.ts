@@ -1,8 +1,11 @@
+import { ItemType, PriceType, Section } from "../types/config";
+import { createBaseConfig, getSection } from "../lib";
+
 import { InitialDataState } from "../types/store";
 import { Item } from "../types/item";
-import { PriceType } from "../types/config";
-import { createBaseConfig } from "../lib";
+import { config } from "process";
 import { createSlice } from "@reduxjs/toolkit";
+import { stat } from "fs";
 
 const initialState: InitialDataState = {
   loading: true,
@@ -36,22 +39,8 @@ export const dataSlice = createSlice({
     setDefaultTab: (state: InitialDataState, action: { payload: number }) => {
       state.defaultTab = action.payload;
     },
-    changeList: (state: InitialDataState, action) => {
-      console.log("action: ", action);
-      let currentSectionName: string;
-      if (action.payload.component.type === "list") {
-        currentSectionName = action.payload.property.type
-          ? action.payload.property.type
-          : action.payload.section.name;
-      } else {
-        currentSectionName = action.payload.component.properties.name;
-      }
-
-      const currentSectionIndex = state.config?.sections?.findIndex(
-        (section) => section.name === currentSectionName
-      );
-      const section = state.config?.sections?.[currentSectionIndex as number];
-
+    change: (state: InitialDataState, action) => {
+      const section = getSection(state, action);
       if (section) {
         if (action.payload.component.type === "list") {
           section.picture = action.payload.property.picture;
@@ -59,29 +48,112 @@ export const dataSlice = createSlice({
         section.value = action.payload.property.name;
         section.price = action.payload.property.price;
       }
+    },
+    reset: (state: InitialDataState, action: { payload: Section }) => {
+      console.log("action: ", action);
 
-      let newPrice = state.config.defaultPrice ? state.config.defaultPrice : 0;
-      state.config?.sections?.forEach((section) => {
+      action.payload.items.forEach((item) => {
+        if (item.type === ItemType.Select) {
+          const name = item.properties.name;
+          const defaultSection = state.defaultConfig?.sections?.find(
+            (section) => section.name === name
+          );
+
+          if (defaultSection) {
+            const configIndex = state.config.sections?.findIndex(
+              (section) => section.name === name
+            );
+            if (
+              configIndex !== -1 &&
+              configIndex !== undefined &&
+              state.config.sections
+            ) {
+              state.config.sections[configIndex] = defaultSection;
+            }
+          }
+        }
+        if (item.type === ItemType.List) {
+          item.properties.values?.forEach((property) => {
+            const name = property.type ? property.type : action.payload.name;
+
+            const defaultSection = state.defaultConfig?.sections?.find(
+              (section) => section.name === name
+            );
+
+            if (defaultSection) {
+              const configIndex = state.config.sections?.findIndex(
+                (section) => section.name === name
+              );
+              if (
+                configIndex !== -1 &&
+                configIndex !== undefined &&
+                state.config.sections
+              ) {
+                state.config.sections[configIndex] = defaultSection;
+              }
+            }
+          });
+        }
+      });
+    },
+    increase: (state: InitialDataState, action) => {
+      const section = getSection(state, action);
+      if (section) {
+        section.count = section.count ? section.count + 1 : 1;
+        if (action.payload.component.type === "list") {
+          section.picture = action.payload.property.picture;
+        }
+        section.value = action.payload.property.name;
+        section.price = action.payload.property.price;
+      }
+    },
+    decrease: (state: InitialDataState, action) => {
+      const section = getSection(state, action);
+      if (section) {
+        section.count = section.count ? section.count - 1 : 0;
+        if (action.payload.component.type === "list") {
+          section.picture = action.payload.property.picture;
+        }
+        section.value = section.count ? action.payload.property.name : "";
+        section.price = section.count ? action.payload.property.price : "";
+      }
+    },
+    recalculate: (state: InitialDataState) => {
+      const oldPrice = state.config.price;
+      let newPrice = state.config.defaultPrice;
+
+      state.config.sections?.forEach((section) => {
         if (section.price?.type === PriceType.Plus) {
-          newPrice += Number(section.price?.value);
+          if (section.count) {
+            newPrice += Number(section.price.value) * Number(section.count);
+          } else newPrice += Number(section.price?.value);
         }
         if (section.price?.type === PriceType.Percent) {
-          if (state.config.defaultPrice) {
+          if (section.count) {
+            newPrice +=
+              state.config.defaultPrice *
+              (Number(section.price.value) / 100) *
+              Number(section.count);
+          } else
             newPrice +=
               state.config.defaultPrice * (Number(section.price?.value) / 100);
-          }
         }
       });
 
-      if (state.config) {
-        state.config.prevPrice = state.config.price;
-        state.config.price = newPrice;
-      }
+      state.config.price = newPrice;
+      state.config.prevPrice = oldPrice;
     },
-    reset: (state: InitialDataState, action: { payload: string }) => {},
   },
 });
 
-export const { setItem, setDefaultTab, changeList } = dataSlice.actions;
+export const {
+  setItem,
+  setDefaultTab,
+  change,
+  reset,
+  increase,
+  decrease,
+  recalculate,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;

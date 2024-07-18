@@ -1,10 +1,21 @@
+import { recalculate, reset } from "../../../redux/data";
+
 import Item from "./Item";
 import { Section } from "../../../types/config";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
 
 export const Items = ({ section }: { section: Section }) => {
+  const dispatch = useAppDispatch();
+
   return section !== undefined && section.items.length ? (
     <>
-      <div className="flex w-min ml-auto pr-[25px] text-[#2a2a2a80]">
+      <button
+        className="flex w-min ml-auto pr-[25px] text-[#2a2a2a80]"
+        onClick={() => {
+          dispatch(reset(section));
+          dispatch(recalculate());
+        }}
+      >
         <svg
           width="18"
           height="18"
@@ -18,7 +29,7 @@ export const Items = ({ section }: { section: Section }) => {
           ></path>
         </svg>
         <div className="text-xs">Сбросить</div>
-      </div>
+      </button>
       <div key={section?.id} className="h-full overflow-y-auto custom-scroll">
         {section?.items?.map((item) => (
           <Item key={item.id} item={item} section={section} />

@@ -19,7 +19,11 @@ export const SelectedParams = () => {
                   <span className="text-[#2a2a2a80] font-medium">
                     {section.name}:
                   </span>
-                  <span>{section.value}</span>
+                  <span>
+                    {section.count
+                      ? section.value + " " + section.count + " шт."
+                      : section.value}
+                  </span>
                 </div>
               ) : (
                 section.value && (
@@ -35,7 +39,11 @@ export const SelectedParams = () => {
                         src={"https://delmard.ru" + section.picture}
                         alt={section.value}
                       />
-                      <span>{section.value}</span>
+                      <span>
+                        {section.count
+                          ? section.value + " " + section.count + " шт."
+                          : section.value}
+                      </span>
                     </div>
                   </div>
                 )

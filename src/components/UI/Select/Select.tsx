@@ -1,8 +1,8 @@
 import { Property, Section, SectionItem } from "../../../types/config";
+import { change, recalculate } from "../../../redux/data";
 import { useEffect, useRef, useState } from "react";
 
 import Caret from "../Caret";
-import { changeList } from "../../../redux/data";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 
@@ -64,12 +64,13 @@ export const Select = ({
                   className="p-[10px] font-medium text-sm"
                   onClick={() => {
                     dispatch(
-                      changeList({
+                      change({
                         property: property,
                         component: item,
                         section: section,
                       })
                     );
+                    dispatch(recalculate());
                   }}
                 >
                   {property.name}

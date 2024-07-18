@@ -4,13 +4,18 @@ import {
   Section,
   SectionItem,
 } from "../../../../../../types/config";
+import {
+  change,
+  decrease,
+  increase,
+  recalculate,
+} from "../../../../../../redux/data";
 import { motion, useAnimate } from "framer-motion";
 import { useEffect, useId } from "react";
 
 import Minus from "../../../../../UI/Minus";
 import Plus from "../../../../../UI/Plus";
 import Row from "../../../../../Row";
-import { changeList } from "../../../../../../redux/data";
 import { deviceIsMobile } from "../../../../../../lib";
 import { setCompletedAnimation } from "../../../../../../redux/animation";
 import { useAppDispatch } from "../../../../../../hooks/useAppDispatch";
@@ -78,13 +83,16 @@ export const ListProperty = ({
           id={id}
           type="radio"
           onChange={() => {
-            dispatch(
-              changeList({
-                property: property,
-                component: parent,
-                section: section,
-              })
-            );
+            if (!property.multiple) {
+              dispatch(
+                change({
+                  property: property,
+                  component: parent,
+                  section: section,
+                })
+              );
+              dispatch(recalculate());
+            }
           }}
           name={property.type ? property.type : section.name}
           value={property.name}
@@ -112,14 +120,39 @@ export const ListProperty = ({
           </figcaption>
           {property.multiple && (
             <Row className="flex items-center justify-around">
-              <button className="aspect-square flex bg-[#F7BC58] size-[26px] items-center justify-center rounded-sm">
+              <button
+                className="aspect-square flex bg-[#F7BC58] size-[26px] items-center justify-center rounded-sm"
+                onClick={() => {
+                  dispatch(
+                    decrease({
+                      property: property,
+                      component: parent,
+                      section: section,
+                    })
+                  );
+                  dispatch(recalculate());
+                }}
+              >
                 <Minus />
               </button>
               <input
                 type="text"
                 className="w-[46px] h-[26px] rounded-sm text-center p-0 border-[#2a2a2a33] border-solid border-[1px]"
+                value={currentSection?.count ? currentSection?.count : 0}
               />
-              <button className="aspect-square flex bg-[#F7BC58] size-[26px] items-center justify-center rounded-sm">
+              <button
+                className="aspect-square flex bg-[#F7BC58] size-[26px] items-center justify-center rounded-sm"
+                onClick={() => {
+                  dispatch(
+                    increase({
+                      property: property,
+                      component: parent,
+                      section: section,
+                    })
+                  );
+                  dispatch(recalculate());
+                }}
+              >
                 <Plus />
               </button>
             </Row>

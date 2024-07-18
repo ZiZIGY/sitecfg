@@ -38,8 +38,6 @@ export const App: FC = () => {
   );
 
   const item = useAppSelector((state) => state.data.item);
-  const dt = useAppSelector((state) => state.data.config);
-  console.log("dt: ", dt);
 
   return (
     <>

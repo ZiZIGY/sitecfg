@@ -2,6 +2,8 @@ import { Section, SectionItem } from "../../../../../types/config";
 
 import ListProperty from "./ListProperty";
 import { motion } from "framer-motion";
+import { reset } from "../../../../../redux/data";
+import { useAppDispatch } from "../../../../../hooks/useAppDispatch";
 
 export const List = ({
   item,
@@ -19,21 +21,23 @@ export const List = ({
   };
 
   return (
-    <motion.ul
-      className="flex flex-wrap gap-x-[60px] pr-[15px] gap-y-[25px] h-full"
-      variants={container}
-      initial="hidden"
-      animate="visible"
-    >
-      {item.properties.values?.map((property, index) => (
-        <ListProperty
-          section={section}
-          property={property}
-          index={index}
-          parent={item}
-          key={property.id}
-        />
-      ))}
-    </motion.ul>
+    <>
+      <motion.ul
+        className="flex flex-wrap gap-x-[60px] pr-[15px] gap-y-[25px] h-full"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
+        {item.properties.values?.map((property, index) => (
+          <ListProperty
+            section={section}
+            property={property}
+            index={index}
+            parent={item}
+            key={property.id}
+          />
+        ))}
+      </motion.ul>
+    </>
   );
 };

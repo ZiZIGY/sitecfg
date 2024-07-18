@@ -1,6 +1,5 @@
 import { ConfigJSON, ItemType, PriceType, Section } from "../types/config";
-
-import { SelectedConfigSection } from "../types/store";
+import { InitialDataState, SelectedConfigSection } from "../types/store";
 
 export const formDataToJson = (formData: FormData) => {
   const json: any = {};
@@ -38,6 +37,7 @@ export const createBaseConfig = (state: ConfigJSON) => {
                 type: PriceType.Free,
                 value: 0,
               },
+              count: 0,
             });
           }
           if (item.type === ItemType.List) {
@@ -59,6 +59,7 @@ export const createBaseConfig = (state: ConfigJSON) => {
                     type: val?.price?.type ? val?.price?.type : PriceType.Free,
                     value: val?.price?.value ? val?.price?.value : 0,
                   },
+                  count: 0,
                 });
               }
             } else {
@@ -71,6 +72,7 @@ export const createBaseConfig = (state: ConfigJSON) => {
                   type: val?.price?.type ? val?.price?.type : PriceType.Free,
                   value: val?.price?.value ? val?.price?.value : 0,
                 },
+                count: 0,
               });
             }
           }
@@ -82,4 +84,27 @@ export const createBaseConfig = (state: ConfigJSON) => {
   };
   recursive(state);
   return data;
+};
+
+export const getSection = (
+  state: InitialDataState,
+  action: { payload: any; type: string }
+) => {
+  let currentSectionName: string;
+  if (action.payload.component.type === "list") {
+    currentSectionName = action.payload.property.type
+      ? action.payload.property.type
+      : action.payload.section.name;
+  } else {
+    currentSectionName = action.payload.component.properties.name;
+  }
+
+  const currentSectionIndex = state.config?.sections?.findIndex(
+    (section) => section.name === currentSectionName
+  );
+  return state.config &&
+    state.config.sections &&
+    currentSectionIndex !== undefined
+    ? state.config.sections[currentSectionIndex]
+    : undefined;
 };
