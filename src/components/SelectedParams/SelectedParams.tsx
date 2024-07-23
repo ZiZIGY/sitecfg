@@ -5,13 +5,27 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 export const SelectedParams = () => {
   const data = useAppSelector((state) => state.data.config);
   const price = useAppSelector((state) => state.data.config.price);
+  const item = useAppSelector((state) => state.data.item);
+  const defaultTab = useAppSelector((state) => state.data.defaultTab);
   const prevPrice = useAppSelector((state) => state.data.config.prevPrice);
 
   return (
-    <div>
+    <div
+      className={
+        item && defaultTab === item?.CONFIG.length + 1
+          ? "selected-params w-full flex flex-col"
+          : "selected-params"
+      }
+    >
       <h2 className="font-medium text-lg mb-[15px]">Характеристики</h2>
-      <div className="bg-[#F2F3F5] rounded-sm overflow-hidden pr-[5px] flex flex-col h-[343px] w-[350px] mb-[15px]">
-        <div className="overflow-y-auto pl-[20px] pr-[15px] my-[15px] custom-scroll">
+      <div
+        className={
+          item && defaultTab === item?.CONFIG.length + 1
+            ? "bg-[#F2F3F5] rounded-sm overflow-hidden pr-[5px] flex flex-col h-full w-full mb-[15px]"
+            : "bg-[#F2F3F5] rounded-sm overflow-hidden pr-[5px] flex flex-col h-[343px] min-w-[350px] mb-[15px]"
+        }
+      >
+        <div className="overflow-y-auto pl-[20px] pr-[15px] my-[15px] custom-scroll w-full">
           {data?.sections?.map((section) => (
             <div key={section.id}>
               {!section.hasOwnProperty("picture") ? (
@@ -52,10 +66,14 @@ export const SelectedParams = () => {
           ))}
         </div>
       </div>
-      <Price price={price} prevPrice={prevPrice} increaseValue={200} />
-      <button className="bg-[#FFA12E] text-[16px] px-[10px] py-[20px] h-[50px] rounded-md font-medium text-white flex items-center justify-center w-full">
-        Подтвердить заказ
-      </button>
+      {item && defaultTab !== item.CONFIG.length + 1 ? (
+        <>
+          <Price price={price} prevPrice={prevPrice} increaseValue={200} />
+          <button className="bg-[#FFA12E] text-[16px] px-[10px] py-[20px] h-[50px] rounded-md font-medium text-white flex items-center justify-center w-full">
+            Подтвердить заказ
+          </button>
+        </>
+      ) : null}
     </div>
   );
 };

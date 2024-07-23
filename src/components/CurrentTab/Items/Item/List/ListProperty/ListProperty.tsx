@@ -47,7 +47,6 @@ export const ListProperty = ({
 
   useEffect(() => {
     !animation.completed?.includes(parent.id) &&
-      !deviceIsMobile() &&
       animate(
         scope.current,
         {
@@ -69,11 +68,11 @@ export const ListProperty = ({
         ref={scope}
         initial={{
           opacity:
-            animation.completed?.includes(parent.id) && !deviceIsMobile()
+            animation.completed?.includes(parent.id)
               ? 1
               : 0,
           y:
-            animation.completed?.includes(parent.id) && !deviceIsMobile()
+            animation.completed?.includes(parent.id)
               ? 0
               : -20,
         }}

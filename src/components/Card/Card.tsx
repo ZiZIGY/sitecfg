@@ -5,7 +5,7 @@ export const Card: FC = () => {
   const { item, loading } = useAppSelector((state) => state.data);
 
   return (
-    <figure className="max-w-72 min-w-72 w-full h-full">
+    <figure className="max-w-72 min-w-72 w-full h-full card">
       {loading ? (
         <div className="aspect-square bg-gray-500 rounded-md mb-4 animate-pulse"></div>
       ) : (

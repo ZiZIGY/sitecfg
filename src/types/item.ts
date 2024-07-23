@@ -19,6 +19,7 @@ export type Item = {
   DATE_ACTIVE_FROM: unknown;
   DATE_ACTIVE_TO: unknown;
   NAME: string;
+  PROPERTY_PROTSENT_SKIDKI_VALUE: string;
   PREVIEW_PICTURE: string;
   PREVIEW_TEXT: string;
   PREVIEW_TEXT_TYPE: string;

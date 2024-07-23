@@ -8,7 +8,7 @@ export const HeaderTabs = () => {
   const { item, defaultTab, loading } = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
   return (
-    <Row className="flex gap-[60px] mb-5">
+    <Row className="flex gap-[60px] mb-5 flex-wrap">
       {!loading &&
         item?.CONFIG.map((tab, tabIndex) =>
           defaultTab === tabIndex ? (
@@ -34,6 +34,29 @@ export const HeaderTabs = () => {
             </button>
           )
         )}
+        {
+          item && defaultTab === item?.CONFIG.length + 1 ? (
+            <button className="flex gap-[6px] font-bold">
+              <div className="bg-[#FFA12E] rounded-lg text-white size-[26px] flex items-center justify-center text-base">
+                {item?.CONFIG.length + 1}
+              </div>
+              <p className="relative">
+                <span>Подтвердить</span>
+                <Underline />
+              </p>
+            </button>
+          ) : (
+            <button
+              className="flex gap-[6px]"
+              onClick={() => dispatch(setDefaultTab(item?.CONFIG.length as number + 1))}
+            >
+              <div className="bg-[#F7BC58] rounded-lg text-white size-[26px] flex items-center justify-center text-base">
+              {item && item?.CONFIG.length + 1}
+              </div>
+              <span>Подтвердить</span>
+            </button>
+          )
+        }
     </Row>
   );
 };
